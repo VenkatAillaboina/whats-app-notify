@@ -1,0 +1,112 @@
+.scheduled-messages {
+  width: 95%;
+  max-width: 1000px;
+  margin: 50px auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.messages-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.messages-table th,
+.messages-table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.messages-table th {
+  background-color: #1e88e5;
+  color: #fff;
+  font-weight: 600;
+}
+
+.messages-table tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+.messages-table tr.completed-row {
+  background-color: #e6f4ea;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-badge.success {
+  background-color: #4BB543;
+}
+
+.status-badge.pending {
+  background-color: #FFA500;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 50px;
+}
+
+.failure-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 50px;
+}
+
+.failure-img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.status-message {
+  font-weight: 500;
+}
+
+.status-message.warning {
+  color: #FFA500;
+}
+
+.status-message.error {
+  color: #FF4C4C;
+}
+
+@media (max-width: 768px) {
+  .messages-table th,
+  .messages-table td {
+    padding: 10px 8px;
+  }
+
+  .failure-img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .messages-table th,
+  .messages-table td {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+
+  .failure-img {
+    width: 80px;
+    height: 80px;
+  }
+}
