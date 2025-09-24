@@ -21,7 +21,7 @@ export class CreateUserDto {
   @IsEmail()
   email: string;
 
-  @ApiProperty({ example: '+15551234567', description: 'User\'s phone number with country code' })
+  @ApiProperty({ example: '+919347305870', description: 'User\'s phone number with country code' })
   @IsPhoneNumber()
   phone: string;
 
@@ -29,7 +29,7 @@ export class CreateUserDto {
   @IsDateString()
   date: string;
 
-  @ApiProperty({ example: '14:30', description: 'The target time for the notification in 24-hour format' })
+  @ApiProperty({ example: '10:00', description: 'The target time for the notification in 24-hour format' })
   @IsString()
   @IsNotEmpty()
   time: string;

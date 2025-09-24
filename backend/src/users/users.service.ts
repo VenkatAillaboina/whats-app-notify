@@ -1,28 +1,42 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-users.dto';
-import { Notification, NotificationDocument } from '../scheduler/schemas/notification.schema';
-
+import { Notification, NotificationDocument, NotificationSchema } from '../scheduler/schemas/notification.schema';
+import { parse } from 'date-fns';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(Notification.name) private notificationModel: Model<NotificationDocument>,
   ) {}
 
+  async getNotifications(){
+    try {
+      const notifications = await this.notificationModel.find().exec();
+      return notifications;
+    } catch (error) {
+      throw new InternalServerErrorException('Failed to fetch notifications.', error);
+    }
+  }
+
   async scheduleUser(createUserDto: CreateUserDto) {
     const { firstName, lastName, email, phone, message, date, time } = createUserDto;
 
+    const dateTimeString = `${date} ${time}`;
     // Combine date and time strings into a single Date object
-    const initialDateTime = new Date(`${date}T${time}`);
+    const initialDateTime = parse(dateTimeString, 'yyyy-MM-dd h:mm a', new Date());
 
     // Validate if the created date is valid
-    if (isNaN(initialDateTime.getTime())) {
-      throw new BadRequestException('Invalid date or time format.');
+     if (isNaN(initialDateTime.getTime())) {
+      // If the first parse failed, try the 24-hour format as a fallback
+      const initialDateTime24 = parse(dateTimeString, 'yyyy-MM-dd HH:mm', new Date());
+      if (isNaN(initialDateTime24.getTime())) {
+          throw new BadRequestException("Invalid date or time format. Use 'YYYY-MM-DD' and 'HH:mm' or 'h:mm a'.");
+      }
+      // Use the successfully parsed 24-hour date
+      Object.assign(initialDateTime, initialDateTime24);
     }
 
-    // For this example, let's set notifications for 1, 2, and 3 hours after the selected time.
-    // You can customize this interval logic as needed.
     const firstNotificationTime = new Date(initialDateTime);
     firstNotificationTime.setMinutes(firstNotificationTime.getMinutes()+3);
 
@@ -40,6 +54,9 @@ export class UsersService {
 
     await newNotification.save();
 
-    return { message: 'Notifications scheduled successfully and saved to database.' };
+    return {
+      statusCode: 201,
+      message: 'Notifications scheduled successfully and saved to database.' 
+    };
   }
 }
