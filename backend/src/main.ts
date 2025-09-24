@@ -7,6 +7,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // This pipe enables the class-validator decorators in your DTOs
+
+  app.enableCors({
+    origin: 'http://localhost:3000', // Or your frontend's URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
+
   app.useGlobalPipes(new ValidationPipe());
 
   // Swagger Configuration
