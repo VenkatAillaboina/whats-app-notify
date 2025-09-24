@@ -24,7 +24,7 @@ export class UsersService {
     // For this example, let's set notifications for 1, 2, and 3 hours after the selected time.
     // You can customize this interval logic as needed.
     const firstNotificationTime = new Date(initialDateTime);
-    firstNotificationTime.setHours(firstNotificationTime.getHours() + 1);
+    firstNotificationTime.setMinutes(firstNotificationTime.getMinutes()+3);
 
     const newNotification = new this.notificationModel({
       firstName,

@@ -6,13 +6,15 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 @ApiTags('scheduler')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService
+  ) {}
 
   @Post('schedule')
   @ApiOperation({ summary: 'Schedule a new set of notifications for a user' })
   @ApiResponse({ status: 201, description: 'The notification has been successfully scheduled.'})
   @ApiResponse({ status: 400, description: 'Bad Request. Invalid input data.'})
-  async scheduleUser(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.scheduleUser(createUserDto);
+  public scheduleUser(@Body() createUserDto: CreateUserDto) {
+    return  this.usersService.scheduleUser(createUserDto);
   }
 }

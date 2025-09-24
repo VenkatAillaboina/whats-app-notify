@@ -46,7 +46,8 @@ export class SchedulerService {
 
       // Set the next notification for 1 hour after the last one
       const nextTime = new Date(notification.nextNotificationTime);
-      nextTime.setHours(nextTime.getHours() + 1);
+      nextTime.setMinutes(nextTime.getMinutes() + 3);
+      // nextTime.setHours(nextTime.getHours() + 1);
 
       await this.notificationModel.updateOne(
         { _id: notification._id },
