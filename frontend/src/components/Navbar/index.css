@@ -4,8 +4,11 @@
   align-items: center;
   background: #1e1e1e;
   color: #fff;
-  padding: 0.8rem 1.5rem;
-  position: relative;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .nav-list {
@@ -23,6 +26,7 @@
     top: 100%;
     left: 0;
     right: 0;
+    width: 100%; /* Added this line */
     background: #2a2a2a;
     padding: 1rem 0;
     text-align: center;
@@ -60,7 +64,6 @@
   position: relative;
   z-index: 10;
 }
-
 @media (max-width: 768px) {
   .hamburger {
     display: block;

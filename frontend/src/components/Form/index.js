@@ -8,14 +8,31 @@ const STATUS_TYPES = {
   ERROR: 'error'
 }
 
+
+const getCurrentDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const getCurrentTime = () => {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+};
+
+
 const Form = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [message, setMessage] = useState('')
   const [email, setEmail] = useState('')
   const [number, setNumber] = useState('')
-  const [date, setDate] = useState('')
-  const [time, setTime] = useState('')
+  const [date, setDate] = useState(getCurrentDate())
+  const [time, setTime] = useState(getCurrentTime())
   const [status, setStatus] = useState('')
   const [statusType, setStatusType] = useState('')
 
@@ -53,8 +70,8 @@ const Form = () => {
         setMessage('')
         setEmail('')
         setNumber('')
-        setDate('')
-        setTime('')
+        setDate(getCurrentDate()) // Reset to current date on success
+        setTime(getCurrentTime()) // Reset to current time on success
       } else {
         const errData = await response.json()
         setStatus(errData.message || 'Failed to schedule')
